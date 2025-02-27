@@ -2,7 +2,7 @@ package com.bridgelabz.employeepayrollapp.model;
 
 import jakarta.persistence.*;
 
-@Entity  // Marks this as a database table
+@Entity  // A database table
 @Table(name = "employees") // Table name in MySQL
 public class Employee {
 

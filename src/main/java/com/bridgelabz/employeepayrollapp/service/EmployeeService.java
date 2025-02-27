@@ -1,5 +1,6 @@
 package com.bridgelabz.employeepayrollapp.service;
 
+import com.bridgelabz.employeepayrollapp.dto.EmployeeDTO;
 import com.bridgelabz.employeepayrollapp.model.Employee;
 import com.bridgelabz.employeepayrollapp.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,29 @@ public class EmployeeService {
         return employeeRepository.findById(id);
     }
 
-    // Create new employee
+    // Create new employee (using DTO)
+    public Employee createEmployee(EmployeeDTO employeeDTO) {
+        Employee employee = new Employee();
+        employee.setName(employeeDTO.getName());
+        employee.setSalary(employeeDTO.getSalary());
+        return employeeRepository.save(employee);
+    }
+
+    // Create new employee (using existing entity)
     public Employee createEmployee(Employee employee) {
         return employeeRepository.save(employee);
     }
 
-    // Update existing employee
+    // Update existing employee (using DTO)
+    public Employee updateEmployee(Long id, EmployeeDTO employeeDTO) {
+        return employeeRepository.findById(id).map(employee -> {
+            employee.setName(employeeDTO.getName());
+            employee.setSalary(employeeDTO.getSalary());
+            return employeeRepository.save(employee);
+        }).orElseThrow(() -> new RuntimeException("Employee not found"));
+    }
+
+    // Update existing employee (using entity)
     public Employee updateEmployee(Long id, Employee updatedEmployee) {
         return employeeRepository.findById(id).map(employee -> {
             employee.setName(updatedEmployee.getName());
