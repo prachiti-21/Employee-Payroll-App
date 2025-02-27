@@ -2,7 +2,7 @@ package com.bridgelabz.employeepayrollapp.model;
 
 import jakarta.persistence.*;
 
-@Entity  // A database table
+@Entity  // Represents a database table
 @Table(name = "employees") // Table name in MySQL
 public class Employee {
 
@@ -12,13 +12,17 @@ public class Employee {
 
     private String name;
     private double salary;
+    private String department; // New field
+    private String email;      // New field
 
     // Constructors
     public Employee() {}
 
-    public Employee(String name, double salary) {
+    public Employee(String name, double salary, String department, String email) {
         this.name = name;
         this.salary = salary;
+        this.department = department;
+        this.email = email;
     }
 
     // Getters and Setters
@@ -30,4 +34,10 @@ public class Employee {
 
     public double getSalary() { return salary; }
     public void setSalary(double salary) { this.salary = salary; }
+
+    public String getDepartment() { return department; }
+    public void setDepartment(String department) { this.department = department; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 }

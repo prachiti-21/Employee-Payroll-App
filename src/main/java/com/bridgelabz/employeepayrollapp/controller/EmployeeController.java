@@ -58,4 +58,22 @@ public class EmployeeController {
         employeeService.deleteEmployee(id);
         return "Employee deleted successfully!";
     }
+
+    // Find employees by name
+    @GetMapping("/findByName")
+    public List<Employee> findEmployeesByName(@RequestParam String name) {
+        return employeeService.findEmployeesByName(name);
+    }
+
+    // Find employees with salary greater than a given amount
+    @GetMapping("/findBySalaryGreaterThan")
+    public List<Employee> findEmployeesWithSalaryGreaterThan(@RequestParam double salary) {
+        return employeeService.findEmployeesWithSalaryGreaterThan(salary);
+    }
+
+    // Find employees with salary less than a given amount
+    @GetMapping("/findBySalaryLessThan")
+    public List<Employee> findEmployeesWithSalaryLessThan(@RequestParam double salary) {
+        return employeeService.findEmployeesWithSalaryLessThan(salary);
+    }
 }

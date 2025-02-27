@@ -5,8 +5,10 @@ import com.bridgelabz.employeepayrollapp.model.Employee;
 import com.bridgelabz.employeepayrollapp.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -58,5 +60,26 @@ public class EmployeeService {
     // Delete employee by ID
     public void deleteEmployee(Long id) {
         employeeRepository.deleteById(id);
+    }
+
+    // Find employees by name
+    public List<Employee> findEmployeesByName(String name) {
+        return employeeRepository.findAll().stream()
+                .filter(employee -> employee.getName().equalsIgnoreCase(name))
+                .collect(Collectors.toList());
+    }
+
+    // Find employees with salary greater than a given amount
+    public List<Employee> findEmployeesWithSalaryGreaterThan(double salary) {
+        return employeeRepository.findAll().stream()
+                .filter(employee -> employee.getSalary() > salary)
+                .collect(Collectors.toList());
+    }
+
+    // Find employees with salary less than a given amount
+    public List<Employee> findEmployeesWithSalaryLessThan(double salary) {
+        return employeeRepository.findAll().stream()
+                .filter(employee -> employee.getSalary() < salary)
+                .collect(Collectors.toList());
     }
 }
