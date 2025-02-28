@@ -2,7 +2,6 @@ package com.example.Employee_Payroll;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ public class EmployeeService {
                 .findFirst()
                 .orElseThrow(() -> {
                     log.error("No employee found with the Id: {}", id);
-                    return new RuntimeException("No employee found with ID: " + id);
+                    return new EmployeeNotFoundException("No employee found with ID: " + id);
                 });
     }
 
@@ -64,25 +63,23 @@ public class EmployeeService {
                 })
                 .orElseThrow(() -> {
                     log.error("Employee not found with Id: {}", id);
-                    return new RuntimeException("Employee not found with ID: " + id);
+                    return new EmployeeNotFoundException("Employee not found with ID: " + id);
                 });
     }
 
-    // Method to delete an existing employee
-    public boolean deleteEmployee(int id) {
+    // Method to delete an existing employee (returns deleted Employee)
+    public Employee deleteEmployee(int id) {
         log.info("Deleting employee with ID: {}", id);
         Employee employeeToDelete = employeeList.stream()
                 .filter(employee -> employee.getId() == id)
                 .findFirst()
                 .orElseThrow(() -> {
                     log.error("Employee not found with ID: {}", id);
-                    return new RuntimeException("Employee not found with ID: " + id);
+                    return new EmployeeNotFoundException("Employee not found with ID: " + id);
                 });
 
-        boolean removed = employeeList.remove(employeeToDelete);
-        if (removed) {
-            log.info("Employee deleted successfully: {}", id);
-        }
-        return removed;
+        employeeList.remove(employeeToDelete);
+        log.info("Employee deleted successfully: {}", id);
+        return employeeToDelete;
     }
 }

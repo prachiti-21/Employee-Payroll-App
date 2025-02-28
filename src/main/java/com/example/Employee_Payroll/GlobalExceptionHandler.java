@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice  // Global Exception Handler
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler extends RuntimeException {
 
     // Handles Validation Errors
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -24,5 +24,11 @@ public class GlobalExceptionHandler {
         }
 
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);  // Return 400 Bad Request
+    }
+
+    // Handles Employee Not Found Exception
+    @ExceptionHandler(EmployeeNotFoundException.class)
+    public ResponseEntity<String> handleEmployeeNotFoundException(EmployeeNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);  // Return 404 Not Found
     }
 }

@@ -46,7 +46,7 @@ public class EmployeeController {
 
     // DELETE method to remove an existing employee
     @DeleteMapping("/delete/{id}")
-    public boolean deleteEmployee(@PathVariable int id) {
+    public Employee deleteEmployee(@PathVariable int id) {
         log.info("Request to delete the existing employee.");
         return employeeService.deleteEmployee(id);
     }
