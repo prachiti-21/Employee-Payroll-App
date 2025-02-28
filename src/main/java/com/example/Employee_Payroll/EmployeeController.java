@@ -1,11 +1,14 @@
 package com.example.Employee_Payroll;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @Slf4j
 @RestController
 @RequestMapping("/employee")
@@ -30,14 +33,14 @@ public class EmployeeController {
 
     // POST method to create a new employee
     @PostMapping("/create")
-    public Employee createEmployee(@RequestBody EmployeeDTO employeeDTO) {
+    public Employee createEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
         log.info("Request to create a new employee.");
         return employeeService.createEmployee(employeeDTO);
     }
 
     // PUT method to update an existing employee
     @PutMapping("/update/{id}")
-    public Employee updateEmployee(@PathVariable int id, @RequestBody EmployeeDTO employeeDTO) {
+    public Employee updateEmployee(@PathVariable int id, @Valid @RequestBody EmployeeDTO employeeDTO) {
         log.info("Request to update the existing employee.");
         return employeeService.updateEmployee(id, employeeDTO);
     }
